@@ -93,13 +93,17 @@ def process_twitter(file, outdir, keywords):
 		else:
 			seenTweets.add(tweetID)
 		
-		# Write out tweetID, tweet
-		content = re.sub('[\n\t]', ' ', tweet['interaction']['content'])
-		tweetContent.write(tweetID + '\t' + content + '\n')
 		
 		# Write out tweetID, user
 		user = tweet['interaction']['author']['username']
+		
+
 		tweetUser.write(tweetID + '\t' + user + '\n')
+		
+
+		# Write out tweetID, tweet
+		content = re.sub('[\n\t]', ' ', tweet['interaction']['content'])
+		tweetContent.write(tweetID + '\t' + content + '\n')
 		
 		# Write out the sentiment
 		if tweet.has_key('salience'):
@@ -151,7 +155,7 @@ def process_twitter(file, outdir, keywords):
 			retweet.write(tweetID + '\t' + originalAuthor + '\n')
 		
 		# Write out keywords
-		cleanedContent = re.sub("[^_a-zA-Z0-9\s]", "", content.strip().lower().encode('ascii', 'ignore'))
+		cleanedContent = re.sub("[^A-Za-z0-9\s]", "", content.lower().strip())
 		tokens = cleanedContent.split()
 		seenWords = set()
  		for word in tokens:
